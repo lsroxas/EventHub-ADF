@@ -1,0 +1,9 @@
+{
+	"name": "ADF-LR255021-EventHub",
+	"location": "eastus2",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "0925c980-5163-4c64-ba43-a61fe9b8cb1d",
+		"tenantId": "7998488c-180b-404d-9d7f-b4bd6f46b2df"
+	}
+}
