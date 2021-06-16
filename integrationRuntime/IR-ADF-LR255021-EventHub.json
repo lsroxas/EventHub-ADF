@@ -1,0 +1,6 @@
+{
+	"name": "IR-ADF-LR255021-EventHub",
+	"properties": {
+		"type": "SelfHosted"
+	}
+}
