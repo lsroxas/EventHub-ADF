@@ -1,0 +1,21 @@
+{
+	"name": "ODBC_TeradataVantage",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "Odbc",
+		"typeProperties": {
+			"connectionString": {
+				"type": "SecureString",
+				"value": "**********"
+			},
+			"authenticationType": "Basic",
+			"userName": "AFP_2021_LR255021",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJjMjBjN2IyYi01ZjY1LTQ5OTgtOGI3Mi0xN2FkNDg2OGQ3OWEiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "IR-ADF-LR255021-EventHub",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}
