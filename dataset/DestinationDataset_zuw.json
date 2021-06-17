@@ -1,0 +1,15 @@
+{
+	"name": "DestinationDataset_zuw",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ODBC_TeradataVantage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "OdbcTable",
+		"schema": [],
+		"typeProperties": {
+			"tableName": "\"AFP_2021_lr255021\".\"ADF_OUTPUT_2\""
+		}
+	}
+}
