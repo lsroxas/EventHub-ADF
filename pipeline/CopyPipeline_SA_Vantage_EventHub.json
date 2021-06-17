@@ -1,0 +1,164 @@
+{
+	"name": "CopyPipeline_SA_Vantage_EventHub",
+	"properties": {
+		"description": "Real Time Streaming Data copy from SA to Vantage",
+		"activities": [
+			{
+				"name": "Copy_zuw",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "lr255021/weatheroutput/0_1da9aca8a68b4b32b4d453f8750977a8_1.json"
+					},
+					{
+						"name": "Destination",
+						"value": "\"AFP_2021_lr255021\".\"ADF_OUTPUT_2\""
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "JsonSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "JsonReadSettings"
+						}
+					},
+					"sink": {
+						"type": "OdbcSink",
+						"writeBatchSize": 0
+					},
+					"enableStaging": false,
+					"enableSkipIncompatibleRow": true,
+					"validateDataConsistency": true,
+					"logSettings": {
+						"enableCopyActivityLog": true,
+						"copyActivityLogSettings": {
+							"logLevel": "Warning",
+							"enableReliableLogging": false
+						},
+						"logLocationSettings": {
+							"linkedServiceName": {
+								"referenceName": "AzureBlobStorage1",
+								"type": "LinkedServiceReference"
+							},
+							"path": "lr255021/output"
+						}
+					},
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"path": "$['messageId']"
+								},
+								"sink": {
+									"name": "messageid",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"path": "$['deviceId']"
+								},
+								"sink": {
+									"name": "deviceId",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['temperature']"
+								},
+								"sink": {
+									"name": "temperature",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"path": "$['humidity']"
+								},
+								"sink": {
+									"name": "humidity",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"path": "$['EventProcessedUtcTime']"
+								},
+								"sink": {
+									"name": "EventProcessedUtcTime",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['PartitionId']"
+								},
+								"sink": {
+									"name": "PartitionId",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"path": "$['EventEnqueuedUtcTime']"
+								},
+								"sink": {
+									"name": "EventEnqueuedUtcTime",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['IoTHub']['ConnectionDeviceGenerationId']"
+								},
+								"sink": {
+									"name": "ConnectionDeviceGenerationId",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['IoTHub']['EnqueuedTime']"
+								},
+								"sink": {
+									"name": "EnqueuedTime",
+									"type": "String"
+								}
+							}
+						],
+						"collectionReference": ""
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SourceDataset_zuw",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DestinationDataset_zuw",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}
