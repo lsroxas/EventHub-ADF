@@ -2,7 +2,7 @@
 	"name": "SourceDataset_zuw",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "linkedService1",
+			"referenceName": "AzureBlobStorage1",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "*json",
+				"fileName": "0_c13fbd187d9243a18cd227e9617d8160_1.json",
 				"folderPath": "device1",
 				"container": "lr255021-weather"
 			}
