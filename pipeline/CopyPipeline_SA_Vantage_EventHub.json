@@ -64,15 +64,6 @@
 						"mappings": [
 							{
 								"source": {
-									"path": "$['messageId']"
-								},
-								"sink": {
-									"name": "messageid",
-									"type": "Int64"
-								}
-							},
-							{
-								"source": {
 									"path": "$['deviceId']"
 								},
 								"sink": {
@@ -82,65 +73,34 @@
 							},
 							{
 								"source": {
-									"path": "$['temperature']"
+									"path": "$['AVERAGE_TEMP']"
 								},
 								"sink": {
-									"name": "temperature",
+									"name": "AVERAGE_TEMP",
 									"type": "Double"
 								}
 							},
 							{
 								"source": {
-									"path": "$['humidity']"
+									"path": "$['AVERAGE_HUMIDITY']"
 								},
 								"sink": {
-									"name": "humidity",
+									"name": "AVERAGE_HUMIDITY",
 									"type": "Double"
 								}
 							},
 							{
 								"source": {
-									"path": "$['EventProcessedUtcTime']"
-								},
-								"sink": {
-									"name": "EventProcessedUtcTime",
-									"type": "String"
+									"path": "$['Time']"
 								}
 							},
 							{
 								"source": {
-									"path": "$['PartitionId']"
+									"path": "$['RowCount']"
 								},
 								"sink": {
-									"name": "PartitionId",
+									"name": "RowCount",
 									"type": "Int32"
-								}
-							},
-							{
-								"source": {
-									"path": "$['EventEnqueuedUtcTime']"
-								},
-								"sink": {
-									"name": "EventEnqueuedUtcTime",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"path": "$['IoTHub']['ConnectionDeviceGenerationId']"
-								},
-								"sink": {
-									"name": "ConnectionDeviceGenerationId",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"path": "$['IoTHub']['EnqueuedTime']"
-								},
-								"sink": {
-									"name": "EnqueuedTime",
-									"type": "String"
 								}
 							}
 						],
