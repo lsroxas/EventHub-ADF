@@ -92,6 +92,10 @@
 							{
 								"source": {
 									"path": "$['Time']"
+								},
+								"sink": {
+									"name": "TimeEntered",
+									"type": "String"
 								}
 							},
 							{
