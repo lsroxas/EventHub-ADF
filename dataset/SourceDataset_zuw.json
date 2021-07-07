@@ -10,9 +10,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "0_1da9aca8a68b4b32b4d453f8750977a8_1.json",
-				"folderPath": "weatheroutput",
-				"container": "lr255021"
+				"folderPath": "device1",
+				"container": "lr255021-weather"
 			}
 		},
 		"schema": {
