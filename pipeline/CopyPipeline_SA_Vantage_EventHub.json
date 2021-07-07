@@ -21,7 +21,7 @@
 					},
 					{
 						"name": "Destination",
-						"value": "\"AFP_2021_lr255021\".\"ADF_OUTPUT_2\""
+						"value": "\"AFP_2021_lr255021\".\"Stream_Agg\""
 					}
 				],
 				"typeProperties": {
