@@ -10,7 +10,6 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "*.json",
 				"folderPath": "device1",
 				"container": "lr255021-weather"
 			}
