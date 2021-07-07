@@ -1,0 +1,272 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "ADF-LR255021-EventHub"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/CopyPipeline_SA_Vantage_EventHub')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Real Time Streaming Data copy from SA to Vantage",
+				"activities": [
+					{
+						"name": "Copy_zuw",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [
+							{
+								"name": "Source",
+								"value": "lr255021/weatheroutput/0_1da9aca8a68b4b32b4d453f8750977a8_1.json"
+							},
+							{
+								"name": "Destination",
+								"value": "\"AFP_2021_lr255021\".\"ADF_OUTPUT_2\""
+							}
+						],
+						"typeProperties": {
+							"source": {
+								"type": "JsonSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "JsonReadSettings"
+								}
+							},
+							"sink": {
+								"type": "OdbcSink",
+								"writeBatchSize": 0
+							},
+							"enableStaging": false,
+							"enableSkipIncompatibleRow": true,
+							"validateDataConsistency": true,
+							"logSettings": {
+								"enableCopyActivityLog": true,
+								"copyActivityLogSettings": {
+									"logLevel": "Warning",
+									"enableReliableLogging": false
+								},
+								"logLocationSettings": {
+									"linkedServiceName": {
+										"referenceName": "AzureBlobStorage1",
+										"type": "LinkedServiceReference"
+									},
+									"path": "lr255021/output"
+								}
+							},
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"path": "$['messageId']"
+										},
+										"sink": {
+											"name": "messageid",
+											"type": "Int64"
+										}
+									},
+									{
+										"source": {
+											"path": "$['deviceId']"
+										},
+										"sink": {
+											"name": "deviceId",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['temperature']"
+										},
+										"sink": {
+											"name": "temperature",
+											"type": "Double"
+										}
+									},
+									{
+										"source": {
+											"path": "$['humidity']"
+										},
+										"sink": {
+											"name": "humidity",
+											"type": "Double"
+										}
+									},
+									{
+										"source": {
+											"path": "$['EventProcessedUtcTime']"
+										},
+										"sink": {
+											"name": "EventProcessedUtcTime",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['PartitionId']"
+										},
+										"sink": {
+											"name": "PartitionId",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"path": "$['EventEnqueuedUtcTime']"
+										},
+										"sink": {
+											"name": "EventEnqueuedUtcTime",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['IoTHub']['ConnectionDeviceGenerationId']"
+										},
+										"sink": {
+											"name": "ConnectionDeviceGenerationId",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['IoTHub']['EnqueuedTime']"
+										},
+										"sink": {
+											"name": "EnqueuedTime",
+											"type": "String"
+										}
+									}
+								],
+								"collectionReference": ""
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "SourceDataset_zuw",
+								"type": "DatasetReference"
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DestinationDataset_zuw",
+								"type": "DatasetReference"
+							}
+						]
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SourceDataset_zuw')]",
+				"[concat(variables('factoryId'), '/datasets/DestinationDataset_zuw')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DestinationDataset_zuw')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ODBC_TeradataVantage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "OdbcTable",
+				"schema": [],
+				"typeProperties": {
+					"tableName": "\"AFP_2021_lr255021\".\"Stream_Agg\""
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SourceDataset_zuw')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "0_1da9aca8a68b4b32b4d453f8750977a8_1.json",
+						"folderPath": "weatheroutput",
+						"container": "lr255021"
+					}
+				},
+				"schema": {
+					"type": "object",
+					"properties": {
+						"messageId": {
+							"type": "integer"
+						},
+						"deviceId": {
+							"type": "string"
+						},
+						"temperature": {
+							"type": "number"
+						},
+						"humidity": {
+							"type": "number"
+						},
+						"EventProcessedUtcTime": {
+							"type": "string"
+						},
+						"PartitionId": {
+							"type": "integer"
+						},
+						"EventEnqueuedUtcTime": {
+							"type": "string"
+						},
+						"IoTHub": {
+							"type": "object",
+							"properties": {
+								"MessageId": {
+									"type": "null"
+								},
+								"CorrelationId": {
+									"type": "null"
+								},
+								"ConnectionDeviceId": {
+									"type": "string"
+								},
+								"ConnectionDeviceGenerationId": {
+									"type": "string"
+								},
+								"EnqueuedTime": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
